@@ -57,10 +57,23 @@ public class CPlayer : CSigleton<CPlayer>
         }
     }
 
-    internal bool b_isShoot;
-    internal bool b_WantCastSpellCard;
-    internal Vector2 drct_Move;
-    internal Vector3 m_Pos;
+    private float t_shoot = 0.2f;
+    private bool b_canShoot = true;
+    private bool b_wantShoot;
+    private float angle_deviation_high = 10f;   //高速移动下，射击时角度偏差范围
+    private float angle_deviation_low = 5f;     //低速移动下，射击时角度偏差范围
+    private float angle_deviation_idle = 1f;    //静止时，射击时角度偏差范围
+
+    private bool b_wantThrowBomb;
+
+    internal bool b_isMoving;
+    internal Vector2 drct_move;
+    internal float angle_move;
+    internal float m_speed_rotate;  //每秒转过的角度
+    internal Vector3 m_pos;
+
+    internal Vector2 drct_shoot;
+    internal float angle_shoot;
 
     private Rigidbody2D m_Rigidbody;
 
@@ -68,7 +81,7 @@ public class CPlayer : CSigleton<CPlayer>
     {
         base.Awake();
         m_Rigidbody = GetComponent<Rigidbody2D>();
-        StartCoroutine(SlowUpdate());
+        
     }
 
     private void Start()
@@ -92,50 +105,54 @@ public class CPlayer : CSigleton<CPlayer>
         PhysicsCheck();
         Move();
         ThrowBomb();
+        Shoot();
     }
-    //每0.1s调用一次
-    private IEnumerator SlowUpdate()
-    {
-        for(; ; )
-        {
-            Shoot();
-            yield return CTool.Wait(0.1f);
-        }
-    }
+
     private void InputCheck()
     {
-        drct_Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        drct_move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        
         InSlowMode = Input.GetKey(KeyCode.LeftShift);
-        b_isShoot = Input.GetKey(KeyCode.Z);
-        if (Input.GetKeyDown(KeyCode.X)) b_WantCastSpellCard = true;
+        b_wantShoot = Input.GetKey(KeyCode.Z);
+        if (Input.GetKeyDown(KeyCode.X)) b_wantThrowBomb = true;
     }
 
     private void PhysicsCheck()
     {
-        m_Pos = transform.position;
+        m_pos = transform.position;
+        b_isMoving = m_Rigidbody.velocity.magnitude > 0.1f;
     }
 
     private void Move()
     {
-        m_Rigidbody.velocity = drct_Move * (InSlowMode ? m_speed_low : m_speed_high);
+        //待修改
+        m_Rigidbody.velocity = drct_move * (InSlowMode ? m_speed_low : m_speed_high);
     }
 
     private void Shoot()
     {
         void Shoot_(int bulletIndex, Vector3 offset, int angle)
         {
-            CBulletController.Instance.Shoot(bulletIndex, m_Pos + offset, angle);
+            CBulletController.Instance.Shoot(bulletIndex, m_pos + offset, angle);
         }
 
+        if (!b_canShoot) return;
+        StartCoroutine(ShootCoolDown());
+    }
+    private IEnumerator ShootCoolDown()
+    {
+        b_canShoot = false;
+        yield return CTool.Wait(t_shoot);
+        b_canShoot = true;
     }
 
     private void ThrowBomb()
     {
-        if (b_WantCastSpellCard && NumOfBomb > 0)
+        if (b_wantThrowBomb && NumOfBomb > 0)
         {
             NumOfBomb--;
 
-            b_WantCastSpellCard = false;
+            b_wantThrowBomb = false;
         }
     }
 }

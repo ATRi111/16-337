@@ -7,7 +7,8 @@ public class CDanmaku : MonoBehaviour
     [SerializeField] 
     protected int m_damage = 10;
     protected int m_speed = 5;
-    public float m_angle = 0;
+
+    protected Rigidbody2D m_rigidbody;
 
     protected bool _Active;
     public bool Active
@@ -28,6 +29,11 @@ public class CDanmaku : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        m_rigidbody = GetComponent<Rigidbody2D>();
+    }
+
     public void Initialize(int ID)
     {
         _Active = true;
@@ -40,22 +46,12 @@ public class CDanmaku : MonoBehaviour
         Active = true;
         transform.position = pos;
         transform.eulerAngles = new Vector3(0, 0, angle);
-        m_angle = angle;
+
     }
+
     public void Recycle()
     {
         Active = false;
-    }
-
-    protected void FixedUpdate()
-    {
-        Move();
-    }
-
-    protected virtual void Move()
-    {
-        Vector2 offset = m_speed * Time.fixedDeltaTime * CTool.Angle2Direction(m_angle);
-        transform.position += new Vector3(offset.x, offset.y); 
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
