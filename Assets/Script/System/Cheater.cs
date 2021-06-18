@@ -11,7 +11,7 @@ public class Cheater : Public.CSigleton<Cheater>
             if (Input.GetKeyDown(KeyCode.Alpha3)) CPlayer.Instance.Power = 300;
             if (Input.GetKeyDown(KeyCode.Alpha4)) CPlayer.Instance.Power = 400;
             if (Input.GetKeyDown(KeyCode.Alpha5)) CPlayer.Instance.Power = 500;
-            if (Input.GetKeyDown(KeyCode.Alpha6)) CPlayer.Instance.HP++;
+            if (Input.GetKeyDown(KeyCode.Alpha6)) CPlayer.Instance.HP+= 100;
             if (Input.GetKeyDown(KeyCode.Alpha7)) CPlayer.Instance.NumOfBomb++;
         }
     }

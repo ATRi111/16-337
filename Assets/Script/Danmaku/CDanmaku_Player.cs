@@ -10,6 +10,7 @@ public class CDanmaku_Player : CDanmaku
         IDamagable obj = collision.GetComponent<IDamagable>();
         if (obj != null)
         {
+            Debug.Log("hit");
             obj.GetDamage(m_damage);
             Recycle();
         }

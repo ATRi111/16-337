@@ -1,7 +1,7 @@
 using Public;
 using UnityEngine;
 
-public class HitPoint_Player : MonoBehaviour,IDamagable_Player,IDamagable
+public class HitPoint_Player : MonoBehaviour,IDamagable_Player
 {
     private bool _Visible;
     public bool Visible
@@ -14,6 +14,7 @@ public class HitPoint_Player : MonoBehaviour,IDamagable_Player,IDamagable
             m_spriteRenderer.enabled = value;
         }
     }
+
     private SpriteRenderer m_spriteRenderer;
 
     private void Awake()

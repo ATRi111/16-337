@@ -10,7 +10,7 @@ public class CDanmaku : MonoBehaviour
 
     protected Rigidbody2D m_rigidbody;
 
-    protected bool _Active;
+    [SerializeField] private bool _Active;
     public bool Active
     {
         get => _Active;
@@ -18,14 +18,7 @@ public class CDanmaku : MonoBehaviour
         {
             if (value == _Active) return;
             _Active = value;
-            if(value)
-            {
-                gameObject.SetActive(true);
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(value);
         }
     }
 
@@ -41,12 +34,12 @@ public class CDanmaku : MonoBehaviour
         m_ID = ID;
     }
 
-    public void Activate(Vector3 pos,int angle)
+    public void Activate(Vector3 pos,float angle)
     {
         Active = true;
         transform.position = pos;
-        transform.eulerAngles = new Vector3(0, 0, angle);
-
+        transform.eulerAngles = new Vector3(0, 0, -angle);
+        m_rigidbody.velocity = m_speed * CTool.Angle2Direction(angle) ;
     }
 
     public void Recycle()

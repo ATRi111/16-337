@@ -1,7 +1,6 @@
+using Public;
 using System.Collections;
 using UnityEngine;
-using Public;
-using UnityEngine.UI;
 using static UnityEngine.SceneManagement.SceneManager;
 
 public class CSceneManager : CSigleton<CSceneManager>
@@ -9,6 +8,8 @@ public class CSceneManager : CSigleton<CSceneManager>
     private const int MAXINDEX = 1;
     //当前关的index
     [SerializeField] private int _Index;
+    [SerializeField] private GameObject player;
+
     internal int Index
     {
         get
@@ -42,6 +43,11 @@ public class CSceneManager : CSigleton<CSceneManager>
     {
         AsyncOperation Async_LoadScene = LoadSceneAsync(index);
         Async_LoadScene.allowSceneActivation = true;
+        switch(index)
+        {
+            default:
+                break;
+        }
         yield return null;
     }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Public
@@ -37,16 +38,15 @@ namespace Public
         public static T Instance { get; private set; }
         protected virtual void Awake()
         {
-            try
+            if (Instance == null)
             {
-                Instance = (T)this;
+                Instance = this as T;
+                if (Instance == null) Debug.Log("创建单例失败");
+                DontDestroyOnLoad(gameObject);
             }
-            catch
-            {
-                Debug.LogWarning("创建单例失败");
-            }
+            else
+                Destroy(gameObject);
             DontDestroyOnLoad(gameObject);
         }
     }
-
 }

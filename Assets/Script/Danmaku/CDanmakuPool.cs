@@ -37,7 +37,7 @@ public class CDanmakuPool : MonoBehaviour
         GameManager.Instance.NumOfLoadAsync--;
     }
     //CBulletPoolController以外的类不应该调用这个方法
-    public void Shoot(Vector3 pos,int angle)
+    public void Shoot(Vector3 pos,float angle)
     {
         for(int i = NextIndex; i<m_size;i++)
         {

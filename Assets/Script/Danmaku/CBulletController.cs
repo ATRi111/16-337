@@ -36,15 +36,9 @@ public class CBulletController : CSigleton<CBulletController>
         }
     }
 
-    public void Shoot(int index, Vector3 pos, int angle = 0)
+    public void Shoot(int index, Vector3 pos, float angle = 0)
     {
-        try
-        {
-            cPools[index].Shoot(pos, angle);
-        }
-        catch
-        {
-            Debug.LogWarning("Éú³Éµ¯Ä»Ê§°Ü");
-        }
+        Debug.Log("shoot");
+        cPools[index].Shoot(pos, angle);
     }
 }

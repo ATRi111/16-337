@@ -37,7 +37,7 @@ public class CDanmakuController : CSigleton<CDanmakuController>
         }
     }
 
-    public void Shoot(int index, Vector3 pos, int angle = 0)
+    public void Shoot(int index, Vector3 pos, float angle = 0)
     {
         try
         {

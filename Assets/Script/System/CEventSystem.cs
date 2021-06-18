@@ -29,11 +29,11 @@ public class CEventSystem : CSigleton<CEventSystem>
 
     protected override void Awake()
     {
+        base.Awake();
         foreach (EEventType key in m_EventDict.Keys)
         {
             m_Event.Add(key, null);
         }
-        base.Awake();
     }
 
     private bool TypeCheck(EEventType eventType, Type methodType)

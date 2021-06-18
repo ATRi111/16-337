@@ -1,12 +1,12 @@
-using UnityEngine;
 using Public;
 using System.Collections;
+using UnityEngine;
 
 public class CPlayer : CSigleton<CPlayer>
 {
     public float m_speed_high = 4f;
     public float m_speed_low = 2f;
-
+                   
     [Header("属性")]
     [SerializeField] private int _HP;   
     public int HP
@@ -57,31 +57,33 @@ public class CPlayer : CSigleton<CPlayer>
         }
     }
 
-    private float t_shoot = 0.2f;
+    private float t_shoot = 0.5f;
     private bool b_canShoot = true;
     private bool b_wantShoot;
+    [SerializeField]
+    private float offset_shoot = 0.3f;          //射击点到中心的距离
+    /*
     private float angle_deviation_high = 10f;   //高速移动下，射击时角度偏差范围
     private float angle_deviation_low = 5f;     //低速移动下，射击时角度偏差范围
     private float angle_deviation_idle = 1f;    //静止时，射击时角度偏差范围
-
+    */
     private bool b_wantThrowBomb;
 
     internal bool b_isMoving;
     internal Vector2 drct_move;
-    internal float angle_move;
-    internal float m_speed_rotate;  //每秒转过的角度
     internal Vector3 m_pos;
 
     internal Vector2 drct_shoot;
+    [SerializeField]
     internal float angle_shoot;
 
     private Rigidbody2D m_Rigidbody;
+
 
     protected override void Awake()
     {
         base.Awake();
         m_Rigidbody = GetComponent<Rigidbody2D>();
-        
     }
 
     private void Start()
@@ -111,10 +113,14 @@ public class CPlayer : CSigleton<CPlayer>
     private void InputCheck()
     {
         drct_move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        
         InSlowMode = Input.GetKey(KeyCode.LeftShift);
-        b_wantShoot = Input.GetKey(KeyCode.Z);
-        if (Input.GetKeyDown(KeyCode.X)) b_wantThrowBomb = true;
+
+        if(Input.GetMouseButtonUp(0)) b_wantShoot = true;
+        if (Input.GetMouseButtonUp(1)) b_wantThrowBomb = true;
+
+        Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        drct_shoot = v.normalized;
+        angle_shoot = CTool.Direction2Angle(drct_shoot);
     }
 
     private void PhysicsCheck()
@@ -131,13 +137,17 @@ public class CPlayer : CSigleton<CPlayer>
 
     private void Shoot()
     {
-        void Shoot_(int bulletIndex, Vector3 offset, int angle)
+        void Shoot_(int bulletIndex, Vector3 offset, float angle)
         {
             CBulletController.Instance.Shoot(bulletIndex, m_pos + offset, angle);
         }
 
+        if (!b_wantShoot) return;
+        b_wantShoot = false;
         if (!b_canShoot) return;
+
         StartCoroutine(ShootCoolDown());
+        Shoot_(0, offset_shoot * drct_shoot, angle_shoot);
     }
     private IEnumerator ShootCoolDown()
     {
@@ -148,11 +158,8 @@ public class CPlayer : CSigleton<CPlayer>
 
     private void ThrowBomb()
     {
-        if (b_wantThrowBomb && NumOfBomb > 0)
-        {
-            NumOfBomb--;
+        if (!b_wantThrowBomb || NumOfBomb == 0) return;
 
-            b_wantThrowBomb = false;
-        }
+        b_wantThrowBomb = false;
     }
 }
