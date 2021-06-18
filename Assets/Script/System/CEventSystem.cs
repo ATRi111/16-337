@@ -5,11 +5,10 @@ using System;
 
 public enum EEventType
 {
-    PlayerChange,
+    HPChange,
     PowerChange,
-    SpellCardChange,
-    SlowModeOn,
-    ShootStart,
+    BombChange,
+    Shoot,
     SceneLoaded,
 }
 
@@ -17,11 +16,10 @@ public class CEventSystem : CSigleton<CEventSystem>
 {
     private readonly Dictionary<EEventType, Type> m_EventDict = new Dictionary<EEventType, Type>()
     {
-        {EEventType.PlayerChange,typeof(Action<int>)},
+        {EEventType.HPChange,typeof(Action<int>)},
         {EEventType.PowerChange,typeof(Action<int>) },
-        {EEventType.SpellCardChange,typeof(Action<int>)},
-        {EEventType.SlowModeOn,typeof(Action<bool>)},
-        {EEventType.ShootStart,typeof(Action)},
+        {EEventType.BombChange,typeof(Action<int>)},
+        {EEventType.Shoot,typeof(Action)},
 
         {EEventType.SceneLoaded,typeof(Action<int>)},
     };
@@ -40,7 +38,7 @@ public class CEventSystem : CSigleton<CEventSystem>
     {
         if (m_EventDict[eventType] != methodType)
         {
-            Debug.Log("响应方法和事件类型不匹配");
+            Debug.Log("响应方法的类型不符合事件所要求的类型");
             return false;
         }
         return true;

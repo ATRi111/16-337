@@ -3,10 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 public class CPlayer : CSigleton<CPlayer>
-{
-    public float m_speed_high = 4f;
-    public float m_speed_low = 2f;
-                   
+{             
     [Header("属性")]
     [SerializeField] private int _HP;   
     public int HP
@@ -16,7 +13,7 @@ public class CPlayer : CSigleton<CPlayer>
         {
             if (value == _HP) return;
             _HP = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.PlayerChange, value);
+            CEventSystem.Instance.ActivateEvent(EEventType.HPChange, value);
         }
     }
 
@@ -28,7 +25,7 @@ public class CPlayer : CSigleton<CPlayer>
         {
             if (value == _NumOfBomb) return;
             _NumOfBomb = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.SpellCardChange, value);
+            CEventSystem.Instance.ActivateEvent(EEventType.BombChange, value);
         }
     }
 
@@ -38,30 +35,19 @@ public class CPlayer : CSigleton<CPlayer>
         get => _Power;
         set
         {
-            if (value == _HP) return;
+            if (value == _Power) return;
             _Power = value;
             CEventSystem.Instance.ActivateEvent(EEventType.PowerChange, value);
         }
     }
 
     [Header("状态")]
-    [SerializeField] private bool _InSlowMode;    //低速模式
-    public bool InSlowMode
-    {
-        get => _InSlowMode;
-        set
-        {
-            if (value == _InSlowMode) return;
-            _InSlowMode = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.SlowModeOn, value);
-        }
-    }
 
     private float t_shoot = 0.5f;
     private bool b_canShoot = true;
     private bool b_wantShoot;
     [SerializeField]
-    private float offset_shoot = 0.3f;          //射击点到中心的距离
+    private float offset_shoot = 0.5f;          //射击点到中心的距离
     /*
     private float angle_deviation_high = 10f;   //高速移动下，射击时角度偏差范围
     private float angle_deviation_low = 5f;     //低速移动下，射击时角度偏差范围
@@ -69,12 +55,15 @@ public class CPlayer : CSigleton<CPlayer>
     */
     private bool b_wantThrowBomb;
 
+    public float MaxSpeed { get; private set; } = 4f;
+    public float DeltaMaxPalstance { get; private set; } = 1.8f;           //车身每固定帧旋转的最大角度
     internal bool b_isMoving;
     internal Vector2 drct_move;
     internal Vector3 m_pos;
 
-    internal Vector2 drct_shoot;
-    [SerializeField]
+    public float DeltaMaxPalstance_Turret { get; private set; } = 3.6f;    //炮塔每固定帧旋转的最大角度
+    internal Vector2 drct_mouse;
+    internal float angle_mouse;
     internal float angle_shoot;
 
     private Rigidbody2D m_Rigidbody;
@@ -112,15 +101,15 @@ public class CPlayer : CSigleton<CPlayer>
 
     private void InputCheck()
     {
+        //待修改
         drct_move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        InSlowMode = Input.GetKey(KeyCode.LeftShift);
 
         if(Input.GetMouseButtonUp(0)) b_wantShoot = true;
         if (Input.GetMouseButtonUp(1)) b_wantThrowBomb = true;
 
         Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        drct_shoot = v.normalized;
-        angle_shoot = CTool.Direction2Angle(drct_shoot);
+        drct_mouse = v.normalized;
+        angle_mouse = CTool.Direction2Angle(drct_mouse);
     }
 
     private void PhysicsCheck()
@@ -132,7 +121,7 @@ public class CPlayer : CSigleton<CPlayer>
     private void Move()
     {
         //待修改
-        m_Rigidbody.velocity = drct_move * (InSlowMode ? m_speed_low : m_speed_high);
+        m_Rigidbody.velocity = drct_move * MaxSpeed;
     }
 
     private void Shoot()
@@ -147,7 +136,7 @@ public class CPlayer : CSigleton<CPlayer>
         if (!b_canShoot) return;
 
         StartCoroutine(ShootCoolDown());
-        Shoot_(0, offset_shoot * drct_shoot, angle_shoot);
+        Shoot_(0, offset_shoot * drct_mouse, angle_mouse);
     }
     private IEnumerator ShootCoolDown()
     {
