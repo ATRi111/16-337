@@ -2,18 +2,8 @@ using Public;
 using System.Collections;
 using UnityEngine;
 
-public class CEnemy : MonoBehaviour, IDamagable
+public class CEnemy : CTank, IDamagable
 {
-    private int _HP;
-    public int HP
-    {
-        get => _HP;
-        set
-        {
-            _HP = value;
-        }
-    }
-
     protected Vector3 m_Pos;
 
     private void Start()
