@@ -8,7 +8,7 @@ public class CEnemy : MonoBehaviour, IDamagable
     public int HP
     {
         get => _HP;
-        protected set
+        set
         {
             _HP = value;
         }

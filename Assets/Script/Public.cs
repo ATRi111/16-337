@@ -18,18 +18,45 @@ namespace Public
             => new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
         public static Vector3 RandomVector3()
             => new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0);
+
+        //代码中人为定义的表示物体朝向和发射方向的角度都遵循以下规则：朝上为0°，顺时针为角度增大的方向，不超过360°
         public static Vector2 Angle2Direction(float angle)
-        => new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad));
+            => new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad));
         public static float Direction2Angle(Vector2 direction)
-            => Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+        {
+            float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+            if (angle < 0) angle += 360f;
+            return angle;
+        }
+        //从originAngle向targetAngle旋转不超过maxAngle
+        public static float Rotate(float originAngle,float targetAngle, float maxAngle =360f)
+        {
+            float newAngle;
+            float deltaAngle = targetAngle - originAngle;
+            if (deltaAngle > 0)
+            {
+                if (deltaAngle < 180f)
+                    newAngle = Mathf.Min(maxAngle, deltaAngle);
+                else
+                    newAngle = -Mathf.Min(maxAngle, 360f - deltaAngle);
+            }
+            else
+            {
+                deltaAngle = -deltaAngle;
+                if (deltaAngle < 180f)
+                    newAngle = -Mathf.Min(maxAngle, deltaAngle);
+                else
+                    newAngle = Mathf.Min(maxAngle, 360f - deltaAngle);
+            }
+
+            newAngle += originAngle;
+            if (newAngle < 0) newAngle += 360f;
+            return newAngle;
+        }
     }
+            
     //可伤害单位的接口
     public interface IDamagable
-    {
-        void GetDamage(int damage);
-    }
-    //友方可伤害单位的接口
-    public interface IDamagable_Player
     {
         void GetDamage(int damage);
     }

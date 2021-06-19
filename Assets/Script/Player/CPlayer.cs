@@ -3,9 +3,10 @@ using System.Collections;
 using UnityEngine;
 
 public class CPlayer : CSigleton<CPlayer>
-{             
+{
+
     [Header("属性")]
-    [SerializeField] private int _HP;   
+    [SerializeField] private int _HP;
     public int HP
     {
         get => _HP;
@@ -17,7 +18,7 @@ public class CPlayer : CSigleton<CPlayer>
         }
     }
 
-    [SerializeField] private int _NumOfBomb;  
+    [SerializeField] private int _NumOfBomb;
     public int NumOfBomb
     {
         get => _NumOfBomb;
@@ -29,42 +30,35 @@ public class CPlayer : CSigleton<CPlayer>
         }
     }
 
-    [SerializeField] private int _Power;  //火力
-    public int Power
-    {
-        get => _Power;
-        set
-        {
-            if (value == _Power) return;
-            _Power = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.PowerChange, value);
-        }
-    }
-
     [Header("状态")]
 
-    private float t_shoot = 0.5f;
+    private float t_shoot = 1f;
     private bool b_canShoot = true;
     private bool b_wantShoot;
     [SerializeField]
-    private float offset_shoot = 0.5f;          //射击点到中心的距离
-    /*
-    private float angle_deviation_high = 10f;   //高速移动下，射击时角度偏差范围
-    private float angle_deviation_low = 5f;     //低速移动下，射击时角度偏差范围
-    private float angle_deviation_idle = 1f;    //静止时，射击时角度偏差范围
-    */
+    private float offset_shoot = 0.5f;          //炮口到车身中心的距离
+
     private bool b_wantThrowBomb;
 
     public float MaxSpeed { get; private set; } = 4f;
     public float DeltaMaxPalstance { get; private set; } = 1.8f;           //车身每固定帧旋转的最大角度
-    internal bool b_isMoving;
-    internal Vector2 drct_move;
-    internal Vector3 m_pos;
+    [SerializeField] private bool _IsMoving;
+    public bool IsMoving
+    {
+        get => _IsMoving;
+        set
+        {
+
+            _IsMoving = value;
+        }
+    }
+    internal Vector2 drct_move;     //车身的角度
+    internal Vector3 m_pos;         //车身的位置
 
     public float DeltaMaxPalstance_Turret { get; private set; } = 3.6f;    //炮塔每固定帧旋转的最大角度
-    internal Vector2 drct_mouse;
-    internal float angle_mouse;
-    internal float angle_shoot;
+    internal Vector2 drct_target;   //瞄准的方向
+    internal float angle_mouse;     //瞄准的角度
+    internal float angle_turret;    //炮塔的角度
 
     private Rigidbody2D m_Rigidbody;
 
@@ -81,16 +75,16 @@ public class CPlayer : CSigleton<CPlayer>
     }
     public void Initialize()
     {
-        HP = 30;
-        Power = 100;
+        HP = 100;
         NumOfBomb = 3;
     }
 
     private void Update()
     {
-        InputCheck();
+        Decide();
     }
 
+    [SerializeField] float angle;
     private void FixedUpdate()
     {
         PhysicsCheck();
@@ -99,7 +93,7 @@ public class CPlayer : CSigleton<CPlayer>
         Shoot();
     }
 
-    private void InputCheck()
+    protected void Decide()
     {
         //待修改
         drct_move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
@@ -108,14 +102,14 @@ public class CPlayer : CSigleton<CPlayer>
         if (Input.GetMouseButtonUp(1)) b_wantThrowBomb = true;
 
         Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        drct_mouse = v.normalized;
-        angle_mouse = CTool.Direction2Angle(drct_mouse);
+        drct_target = v.normalized;
+        angle_mouse = CTool.Direction2Angle(drct_target);
     }
 
     private void PhysicsCheck()
     {
         m_pos = transform.position;
-        b_isMoving = m_Rigidbody.velocity.magnitude > 0.1f;
+        IsMoving = m_Rigidbody.velocity.magnitude > 0.1f;
     }
 
     private void Move()
@@ -128,15 +122,15 @@ public class CPlayer : CSigleton<CPlayer>
     {
         void Shoot_(int bulletIndex, Vector3 offset, float angle)
         {
-            CBulletController.Instance.Shoot(bulletIndex, m_pos + offset, angle);
+            CDanmakuController.Instance.Shoot(bulletIndex, m_pos + offset, angle);
         }
 
         if (!b_wantShoot) return;
         b_wantShoot = false;
         if (!b_canShoot) return;
-
+        //待修改
         StartCoroutine(ShootCoolDown());
-        Shoot_(0, offset_shoot * drct_mouse, angle_mouse);
+        Shoot_(1, offset_shoot * drct_target, angle_mouse);
     }
     private IEnumerator ShootCoolDown()
     {

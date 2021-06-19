@@ -2,14 +2,9 @@ using Public;
 using System.Collections;
 using UnityEngine;
 
-public class CDanmakuSource : CEnemy
+public class CDanmakuSource : MonoBehaviour
 {
-    private int m_angle;
-
-    private void Awake()
-    {
-        m_angle = 0;
-    }
+    private int m_angle =0;
 
     private void Start()
     {
@@ -26,9 +21,9 @@ public class CDanmakuSource : CEnemy
         }
     }
 
-    protected override void Shoot_(int damakuIndex, Vector3 offset, int angle)
+    private void Shoot_(int damakuIndex, Vector3 offset, int angle)
     {
-        CDanmakuController.Instance.Shoot(damakuIndex, m_Pos + offset, m_angle + angle);
+        CDanmakuController.Instance.Shoot(damakuIndex, transform.position + offset, m_angle + angle);
     }
     //向四面八方发射直线弹幕
     private IEnumerator Attack1()
