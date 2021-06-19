@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CTurret : MonoBehaviour
 {
-    public float m_deltaMaxAngle = 3.6f;    //每固定帧旋转的最大角度
+    internal float m_deltaMaxAngle = 2f;    //每固定帧旋转的最大角度
     [SerializeField] private float _Angle;
     public float Angle
     {
@@ -16,17 +16,19 @@ public class CTurret : MonoBehaviour
         }
     }
 
-    [SerializeField] private float m_offset = 0.5f; //炮口到炮塔轴心的距离
+    [SerializeField] private float m_offset; //炮口到炮塔轴心的距离
 
     private float t_shoot = 0.5f;
     private bool b_canShoot = true;
-    internal bool b_wantShoot;
+
+    [Header("外部变量")]
     public float angle_deviation;     //射击时角度偏差范围,由CTank脚本控制
     public float angle_target;        //想要转向的角度
+    internal bool b_wantShoot;
 
     private void FixedUpdate()
     {
-        CTool.Rotate(Angle, angle_target, m_deltaMaxAngle);
+        Angle = CTool.Rotate(Angle, angle_target, m_deltaMaxAngle);
         Shoot();
     }
 

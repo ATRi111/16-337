@@ -31,6 +31,8 @@ namespace Public
         //从originAngle向targetAngle旋转不超过maxAngle
         public static float Rotate(float originAngle,float targetAngle, float maxAngle =360f)
         {
+            targetAngle = (targetAngle + 360f) % 360f;
+            originAngle = (originAngle + 360f) % 360f;
             float newAngle;
             float deltaAngle = targetAngle - originAngle;
             if (deltaAngle > 0)
@@ -50,7 +52,7 @@ namespace Public
             }
 
             newAngle += originAngle;
-            if (newAngle < 0) newAngle += 360f;
+            newAngle = (newAngle + 360f) % 360f;
             return newAngle;
         }
     }

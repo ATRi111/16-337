@@ -6,7 +6,7 @@ public class CDanmaku : MonoBehaviour
     internal int m_ID = 0;
     [SerializeField] 
     protected int m_damage = 10;
-    protected int m_speed = 5;
+    protected int m_speed = 10;
 
     protected Rigidbody2D m_rigidbody;
 
@@ -53,6 +53,7 @@ public class CDanmaku : MonoBehaviour
         if (obj != null)
         {
             obj.GetDamage(m_damage);
+            Recycle();
         }
     }
 }

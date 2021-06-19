@@ -16,11 +16,8 @@ public class CTank : MonoBehaviour
             CEventSystem.Instance.ActivateEvent(EEventType.HPChange, value);
         }
     }
-
-    internal Vector3 m_pos;
-           
-    private float angle_deviation_move = 10f;   //ÒÆ¶¯Ê±£¬Éä»÷Ê±½Ç¶ÈÆ«²î·¶Î§
-    private float angle_deviation_idle = 1f;    //¾²Ö¹Ê±£¬Éä»÷Ê±½Ç¶ÈÆ«²î·¶Î§
+    protected float angle_deviation_move = 6f;   //ÒÆ¶¯Ê±£¬Éä»÷Ê±½Ç¶ÈÆ«²î·¶Î§
+    protected float angle_deviation_idle = 3f;    //¾²Ö¹Ê±£¬Éä»÷Ê±½Ç¶ÈÆ«²î·¶Î§
     
     protected CTurret cTurret;
     protected CBody cBody;
@@ -31,12 +28,12 @@ public class CTank : MonoBehaviour
         cBody = GetComponentInChildren<CBody>();
     }
 
-    private void Update()
+    protected void Update()
     {
         Decide();
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         PhysicsCheck();
     }
@@ -46,9 +43,8 @@ public class CTank : MonoBehaviour
 
     }
 
-    private void PhysicsCheck()
+    protected void PhysicsCheck()
     {
-        m_pos = transform.position;
         cTurret.angle_deviation = cBody.b_isMoving ? angle_deviation_move : angle_deviation_idle;
     }
 }

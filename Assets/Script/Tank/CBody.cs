@@ -3,16 +3,7 @@ using Public;
 
 public class CBody : MonoBehaviour
 {
-    public float m_maxSpeed = 4f;
-    public float t_accelerate = 0.4f;           //加速时间
-    private float _deltaSpeed_accelerate;
-    public float t_friction = 0.4f;             //仅摩擦减速时间
-    private float _deltaSpeed_friction;
-    public float t_decelerate = 0.2f;           //减速时间
-    private float _deltaSpeed_decelerate;
-
-    public float m_deltaMaxAngle = 3.6f;        //每固定帧旋转的最大角度
-
+    internal float m_deltaMaxAngle = 1f;        //每固定帧旋转的最大角度
     [SerializeField] private float _Angle;
     public float Angle
     {
@@ -24,37 +15,46 @@ public class CBody : MonoBehaviour
         }
     }
 
+    public float m_maxSpeed = 4f;
+    internal float t_accelerate = 1.5f;           //仅动力加速时间
+    private float _deltaSpeed_accelerate;
+    internal float t_friction = 2f;             //仅摩擦力减速时间
+    private float _deltaSpeed_friction;
+
     public bool b_isMoving;
 
-    [SerializeField]
-    private Rigidbody2D mainRigidbody;
+    [Header("外部变量")]
     public float angle_target;    //想要转向的角度
     public float sign_move;       //1表示前进，-1表示后退，0表示不前进也不后退 
+    public Rigidbody2D m_rigidbody;
 
     private void Awake()
     {
-        mainRigidbody = transform.parent.gameObject.GetComponent<Rigidbody2D>();
+        m_rigidbody = GetComponent<Rigidbody2D>();
         _deltaSpeed_accelerate = m_maxSpeed / t_accelerate * Time.fixedDeltaTime;
         _deltaSpeed_friction = -m_maxSpeed / t_friction * Time.fixedDeltaTime;
-        _deltaSpeed_decelerate = -m_maxSpeed / t_decelerate * Time.fixedDeltaTime;
     }
 
     private void FixedUpdate()
     {
-        CTool.Rotate(Angle, angle_target, m_deltaMaxAngle);
+        //Debug.Log($"{Angle} {angle_target} {m_deltaMaxAngle}");
+        Angle = CTool.Rotate(Angle, angle_target, m_deltaMaxAngle);
         Move();
     }
 
+    [SerializeField] float ve;
     private void Move()
     {
-        float deltaSpeed;
-        if (sign_move > 0) deltaSpeed = _deltaSpeed_accelerate;
-        else if(sign_move <0)  deltaSpeed = _deltaSpeed_decelerate;
-        else deltaSpeed = _deltaSpeed_friction;
-        mainRigidbody.velocity += deltaSpeed * CTool.Angle2Direction(Angle);
+        ve = m_rigidbody.velocity.magnitude;
+        //动力
+        m_rigidbody.velocity += sign_move * _deltaSpeed_accelerate * CTool.Angle2Direction(Angle);
+        if (m_rigidbody.velocity.magnitude > m_maxSpeed) m_rigidbody.velocity = m_maxSpeed * m_rigidbody.velocity.normalized;
+        //摩擦
+        float v = m_rigidbody.velocity.magnitude;
+        if (v + _deltaSpeed_friction < 0) v = 0;
+        else v += _deltaSpeed_friction;
+        m_rigidbody.velocity = v * m_rigidbody.velocity.normalized;
 
-        if (mainRigidbody.velocity.magnitude > m_maxSpeed) mainRigidbody.velocity = m_maxSpeed * mainRigidbody.velocity.normalized;
-
-        b_isMoving = mainRigidbody.velocity.magnitude > 0.1f;
+        b_isMoving = m_rigidbody.velocity.magnitude > 0.1f;
     }
 }
