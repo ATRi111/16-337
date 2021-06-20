@@ -26,7 +26,7 @@ public class CBody : MonoBehaviour
     [Header("外部变量")]
     public float angle_target;    //想要转向的角度
     public float sign_move;       //1表示前进，-1表示后退，0表示不前进也不后退 
-    public Rigidbody2D m_rigidbody;
+    private Rigidbody2D m_rigidbody;
 
     private void Awake()
     {

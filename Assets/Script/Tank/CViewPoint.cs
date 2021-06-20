@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//同时用于看其他坦克和被其他坦克看的点
+//同时用作看其他坦克的点和被其他坦克看的点
 public class CViewPoint : MonoBehaviour
 {
     public float m_view;      //视野
@@ -32,8 +32,10 @@ public class CViewPoint : MonoBehaviour
     {
         float visibility = 1;   //vp对于this的可见度
         if (vp.cBody.b_isMoving) visibility *= 1.5f;
-        if (vp.b_InGrass) visibility *= 0.4f;
-        return (m_pos - vp.m_pos).magnitude < m_view * visibility;
+        if (vp.b_InGrass) visibility *= 0.5f;
+        bool see = (m_pos - vp.m_pos).magnitude < m_view * visibility && !CViewTool.Instance.BlockedByObstacle(this, vp);
+        if (see) Debug.DrawLine(m_pos, vp.m_pos, Color.blue);
+        return see;
     }
 
     private void OnDrawGizmos()

@@ -62,7 +62,7 @@ namespace Public
     {
         void GetDamage(int damage);
     }
-    public class CSigleton<T> : MonoBehaviour where T : CSigleton<T>
+    public class CSingleton<T> : MonoBehaviour where T : CSingleton<T>
     {
         public static T Instance { get; private set; }
         protected virtual void Awake()

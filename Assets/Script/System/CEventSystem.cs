@@ -12,12 +12,12 @@ public enum EEventType
     SceneLoaded,
 }
 
-public class CEventSystem : CSigleton<CEventSystem>
+public class CEventSystem : CSingleton<CEventSystem>
 {
     private readonly Dictionary<EEventType, Type> m_EventDict = new Dictionary<EEventType, Type>()
     {
         {EEventType.HPChange,typeof(Action<int>)},
-        {EEventType.PowerChange,typeof(Action<int>) },
+        {EEventType.PowerChange,typeof(Action<int>)},
         {EEventType.BombChange,typeof(Action<int>)},
         {EEventType.Shoot,typeof(Action)},
 

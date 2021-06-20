@@ -47,12 +47,16 @@ public class CDanmaku : MonoBehaviour
         Active = false;
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         IDamagable obj = collision.GetComponent<IDamagable>();
         if (obj != null)
         {
             obj.GetDamage(m_damage);
+            Recycle();
+        }
+        else if(collision.CompareTag("Obstacle"))
+        {
             Recycle();
         }
     }

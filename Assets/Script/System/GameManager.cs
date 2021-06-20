@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Public;
 
-public class GameManager : CSigleton<GameManager>
+public class GameManager : CSingleton<GameManager>
 {
     [SerializeField] private int _NumOfLoadAsync;
     public int NumOfLoadAsync

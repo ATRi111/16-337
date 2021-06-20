@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boader
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -45,20 +46,20 @@ TagManager:
   - name: BackGround
     uniqueID: 1858146293
     locked: 0
+  - name: Obstacle
+    uniqueID: 3513723827
+    locked: 0
   - name: Enemy
     uniqueID: 2664565553
     locked: 0
   - name: Player
     uniqueID: 3053163639
     locked: 0
-  - name: Bullet
-    uniqueID: 2290756951
-    locked: 0
   - name: Danmaku
     uniqueID: 2751224733
     locked: 0
-  - name: SpellCard
-    uniqueID: 3513723827
+  - name: Grass
+    uniqueID: 2914897295
     locked: 0
   - name: Effect
     uniqueID: 2608664639

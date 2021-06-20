@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Cheater : Public.CSigleton<Cheater>
+public class Cheater : Public.CSingleton<Cheater>
 {
     private void Update()
     {

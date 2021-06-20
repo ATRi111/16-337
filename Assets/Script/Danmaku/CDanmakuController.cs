@@ -1,7 +1,7 @@
 using Public;
 using UnityEngine;
 
-public class CDanmakuController : CSigleton<CDanmakuController>
+public class CDanmakuController : CSingleton<CDanmakuController>
 {
     public GameObject[] danmakus;   //弹幕样本
     public int[] sizes;             //弹幕池中每种子弹的数量

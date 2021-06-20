@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using static UnityEngine.SceneManagement.SceneManager;
 
-public class CSceneManager : CSigleton<CSceneManager>
+public class CSceneManager : CSingleton<CSceneManager>
 {
     private const int MAXINDEX = 1;
     //当前关的index
