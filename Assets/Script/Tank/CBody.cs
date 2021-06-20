@@ -37,7 +37,6 @@ public class CBody : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log($"{Angle} {angle_target} {m_deltaMaxAngle}");
         Angle = CTool.Rotate(Angle, angle_target, m_deltaMaxAngle);
         Move();
     }
@@ -45,16 +44,19 @@ public class CBody : MonoBehaviour
     [SerializeField] float ve;
     private void Move()
     {
-        ve = m_rigidbody.velocity.magnitude;
         //¶¯Á¦
         m_rigidbody.velocity += sign_move * _deltaSpeed_accelerate * CTool.Angle2Direction(Angle);
-        if (m_rigidbody.velocity.magnitude > m_maxSpeed) m_rigidbody.velocity = m_maxSpeed * m_rigidbody.velocity.normalized;
+        if (m_rigidbody.velocity.magnitude > m_maxSpeed) 
+            m_rigidbody.velocity = m_maxSpeed * m_rigidbody.velocity.normalized;
         //Ä¦²Á
         float v = m_rigidbody.velocity.magnitude;
-        if (v + _deltaSpeed_friction < 0) v = 0;
-        else v += _deltaSpeed_friction;
+        if (v + _deltaSpeed_friction < 0) 
+            v = 0;
+        else 
+            v += _deltaSpeed_friction;
         m_rigidbody.velocity = v * m_rigidbody.velocity.normalized;
 
-        b_isMoving = m_rigidbody.velocity.magnitude > 0.1f;
+        b_isMoving = m_rigidbody.velocity.magnitude > 1f;
+        ve = m_rigidbody.velocity.magnitude;
     }
 }

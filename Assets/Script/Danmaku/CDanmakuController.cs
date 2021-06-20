@@ -8,7 +8,6 @@ public class CDanmakuController : CSigleton<CDanmakuController>
     private CDanmakuPool[] cPools;  //弹幕池
     private int m_size;
 
-
     private void Start()
     {
         m_size = sizes.Length;
@@ -36,7 +35,7 @@ public class CDanmakuController : CSigleton<CDanmakuController>
             }
         }
     }
-
+    //只有这个Shoot方法应该被外部调用
     public void Shoot(int index, Vector3 pos, float angle = 0)
     {
         try
