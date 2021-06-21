@@ -19,11 +19,14 @@ public class CEnemy : CTank
         }
     }
 
+    private PolyNavAgent navi;
+
     protected override void Awake()
     {
         base.Awake();
         _Visible = true;
         Visible = false;
+        navi = GetComponent<PolyNavAgent>();
     }
 
     protected override void PhysicsCheck()
@@ -36,5 +39,4 @@ public class CEnemy : CTank
     {
         
     }
-
 }

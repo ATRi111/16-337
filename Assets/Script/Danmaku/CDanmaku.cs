@@ -55,7 +55,7 @@ public class CDanmaku : MonoBehaviour
             obj.GetDamage(m_damage);
             Recycle();
         }
-        else if(collision.CompareTag("Obstacle"))
+        else if(collision.CompareTag("Obstacle")||!collision.isTrigger)
         {
             Recycle();
         }

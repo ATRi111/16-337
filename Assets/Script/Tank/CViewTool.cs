@@ -1,7 +1,6 @@
 using Public;
 using UnityEngine;
 
-//视野工具类
 public class CViewTool :CSingleton<CViewTool>
 {
     public LayerMask obstacleLayer;
@@ -16,5 +15,10 @@ public class CViewTool :CSingleton<CViewTool>
         return hit;
     }
 
-
+    public bool CloseToObstacle(Vector3 pos,Vector2 drct,float distance = 0.1f)
+    {
+        bool hit = Physics2D.Raycast(pos, drct, distance, obstacleLayer);
+        if (hit) Debug.DrawLine(pos, pos + (Vector3) drct * distance,Color.red);
+        return hit;
+    }
 }
