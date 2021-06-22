@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class CPlayer : CTank
 {
+    public int maxHP;
+    public override int HP
+    {
+        get => _HP;
+        set
+        {
+            if (value == _HP) return;
+            _HP = value;
+            CEventSystem.Instance.ActivateEvent(EEventType.HPChange, value , maxHP);
+        }
+    }
+
     public static CPlayer Instance { get; private set; }
     private CBody_Player cBody_Player;
     protected override void Awake()
@@ -26,7 +38,7 @@ public class CPlayer : CTank
     }
     public void Initialize()
     {
-        HP = 100;
+        maxHP = HP = 100;
     }
 
     protected override void Decide()

@@ -8,7 +8,6 @@ public class CSceneManager : CSingleton<CSceneManager>
     private const int MAXINDEX = 1;
     //当前关的index
     [SerializeField] private int _Index;
-    [SerializeField] private GameObject player;
 
     internal int Index
     {
@@ -25,7 +24,7 @@ public class CSceneManager : CSingleton<CSceneManager>
 
             StartCoroutine(ILoadLevel(value));
             _Index = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.SceneLoaded, value);
+            CEventSystem.Instance.ActivateEvent(EEventType.SceneLoad, value);
         }
     }
 

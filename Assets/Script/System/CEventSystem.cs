@@ -7,21 +7,21 @@ public enum EEventType
 {
     HPChange,
     PowerChange,
-    BombChange,
+    SpeedChange,
     Shoot,
-    SceneLoaded,
+    SceneLoad,
 }
 
 public class CEventSystem : CSingleton<CEventSystem>
 {
     private readonly Dictionary<EEventType, Type> m_EventDict = new Dictionary<EEventType, Type>()
     {
-        {EEventType.HPChange,typeof(Action<int>)},
-        {EEventType.PowerChange,typeof(Action<int>)},
-        {EEventType.BombChange,typeof(Action<int>)},
+        {EEventType.HPChange,typeof(Action<int,int>)},      //血量，血量上限
+        {EEventType.PowerChange,typeof(Action<int>)},       //火力
+        {EEventType.SpeedChange,typeof(Action<int>)},       //速度
         {EEventType.Shoot,typeof(Action)},
 
-        {EEventType.SceneLoaded,typeof(Action<int>)},
+        {EEventType.SceneLoad,typeof(Action<int>)},       //要加载的场景号
     };
     private readonly Dictionary<EEventType, Delegate> m_Event = new Dictionary<EEventType, Delegate>();
 

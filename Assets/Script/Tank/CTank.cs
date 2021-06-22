@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CTank : MonoBehaviour
 {
-    [SerializeField] private int _HP;
-    public int HP
+    [SerializeField] protected int _HP;
+    public virtual int HP
     {
         get => _HP;
         set
         {
             if (value == _HP) return;
             _HP = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.HPChange, value);
         }
     }
 

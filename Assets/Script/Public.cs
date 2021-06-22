@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Public
@@ -11,8 +10,7 @@ namespace Public
         public static GameObject FindFromUI(string name) => GameObject.Find("UI").transform.Find(name).gameObject;
         public static IEnumerator Wait(float duration)
         {
-            for (float timer = 0; timer < duration; timer += Time.deltaTime)
-                yield return null;
+            yield return new WaitForSeconds(duration);
         }
         public static Vector2 RandomVector2()
             => new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
@@ -62,6 +60,7 @@ namespace Public
     {
         void GetDamage(int damage);
     }
+    //继承这个类的类是单例
     public class CSingleton<T> : MonoBehaviour where T : CSingleton<T>
     {
         public static T Instance { get; private set; }
