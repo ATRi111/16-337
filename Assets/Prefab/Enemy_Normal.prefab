@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 2
   mass: 1
-  stoppingDistance: 3
+  stoppingDistance: 0
   slowingDistance: 6
   decelerationRate: 1
   closerPointOnInvalid: 1
