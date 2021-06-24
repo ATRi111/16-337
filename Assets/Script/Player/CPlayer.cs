@@ -1,5 +1,4 @@
 using Public;
-using System.Collections;
 using UnityEngine;
 
 public class CPlayer : CTank
@@ -44,7 +43,12 @@ public class CPlayer : CTank
         maxHP = HP = 100;
     }
 
-    protected override void Decide()
+    private void Update()
+    {
+        InputCheck();
+    }
+
+    private void InputCheck()
     {
         cBody_Player.sign_move = Input.GetAxisRaw("Vertical");
         cBody_Player.angle_target = cBody_Player.Angle + Input.GetAxisRaw("Horizontal") * 90f;

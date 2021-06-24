@@ -49,9 +49,4 @@ public class CEnemy : CTank
         Visible = CPlayer.Instance.See(this);
         SeePlayer = See(CPlayer.Instance);
     }
-
-    protected override void Decide()
-    {
-        
-    }
 }

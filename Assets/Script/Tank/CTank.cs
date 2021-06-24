@@ -38,19 +38,9 @@ public class CTank : MonoBehaviour
         }
     }
 
-    protected void Update()
-    {
-        Decide();
-    }
-
     protected void FixedUpdate()
     {
         PhysicsCheck();
-    }
-
-    protected virtual void Decide()
-    {
-
     }
 
     protected virtual void PhysicsCheck()
