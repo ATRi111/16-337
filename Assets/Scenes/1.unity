@@ -349,6 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _HP: 0
+  maxHP: 0
 --- !u!1 &527216019
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +699,52 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.942174, y: 1.1195204}
   m_EdgeRadius: 0
+--- !u!1 &1320124838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1320124839}
+  - component: {fileID: 1320124840}
+  m_Layer: 0
+  m_Name: DestinationData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1320124839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320124838}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1223044, y: 0.6810353, z: -6.9416337}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1320124840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320124838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbaa8ff3965e05a458254f99ed5d4486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pos_beSeen: {x: 0, y: 0, z: 0}
+  pos_Shoot: {x: 0, y: 0, z: 0}
+  b_recetnlyBeSeen: {x: 0, y: 0, z: 0}
 --- !u!1 &1470026253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7790729986548949251}
   - component: {fileID: 387775087366876939}
-  - component: {fileID: 7487284131353006240}
+  - component: {fileID: 3399679227754858281}
   m_Layer: 6
   m_Name: Turret
   m_TagString: Untagged
@@ -1009,6 +1056,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3399679227754858281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3399679227754858280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6447b38d4813ec8469cd3d6547a0af95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Angle: 0
+  m_offset: 0.7
+  angle_deviation: 0
+  angle_target: 0
 --- !u!4 &3599706379542056812
 Transform:
   m_ObjectHideFlags: 0
@@ -1388,22 +1451,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.01
---- !u!114 &7487284131353006240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3399679227754858280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd8465f98429a34ea52f3c634ee99e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Angle: 0
-  m_offset: 0.7
-  angle_deviation: 0
-  angle_target: 0
 --- !u!58 &7622804620786886406
 CircleCollider2D:
   m_ObjectHideFlags: 0

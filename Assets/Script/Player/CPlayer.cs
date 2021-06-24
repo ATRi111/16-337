@@ -17,7 +17,9 @@ public class CPlayer : CTank
     }
 
     public static CPlayer Instance { get; private set; }
-    private CBody_Player cBody_Player;
+    private CBody_Player cBody_Player;      //原本的cBody弃用
+    private CTurret_Player cTurret_Player;  //原本的cTurret弃用
+
     protected override void Awake()
     {
         base.Awake();
@@ -30,6 +32,7 @@ public class CPlayer : CTank
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
         cBody_Player = GetComponentInChildren<CBody_Player>();
+        cTurret_Player = GetComponentInChildren<CTurret_Player>();
     }
 
     private void Start()
@@ -47,8 +50,8 @@ public class CPlayer : CTank
         cBody_Player.angle_target = cBody_Player.Angle + Input.GetAxisRaw("Horizontal") * 90f;
         Vector3 v3 = Camera.main.ScreenToWorldPoint(Input.mousePosition) - cBody_Player.transform.position;
         Vector2 v2 = v3.normalized;
-        cTurret.angle_target = CTool.Direction2Angle(v2);
+        cTurret_Player.angle_target = CTool.Direction2Angle(v2);
 
-        if (Input.GetMouseButtonUp(0)) cTurret.b_wantShoot = true;
+        if (Input.GetMouseButtonUp(0)) cTurret_Player.b_wantShoot = true;
     }
 }

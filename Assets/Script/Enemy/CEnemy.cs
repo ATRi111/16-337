@@ -18,8 +18,22 @@ public class CEnemy : CTank
             }
         }
     }
+    private bool _SeePlayer;
+    public bool SeePlayer
+    {
+        get => _SeePlayer;
+        set
+        {
+            _SeePlayer = value;
+            cTurret.b_wantShoot = value;
+            if (value)
+            {
+                CDestinationData.Instance.pos_beSeen = CPlayer.Instance.m_pos;
+            }
+        }
+    }
 
-    private PolyNavAgent navi;
+    private PolyNavAgent navi;  //µ¼º½×é¼þ
 
     protected override void Awake()
     {
@@ -33,6 +47,7 @@ public class CEnemy : CTank
     {
         base.PhysicsCheck();
         Visible = CPlayer.Instance.See(this);
+        SeePlayer = See(CPlayer.Instance);
     }
 
     protected override void Decide()
