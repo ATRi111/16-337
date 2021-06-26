@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 143852067}
   - component: {fileID: 143852066}
   m_Layer: 0
-  m_Name: DanmakuController
+  m_Name: CDanmakuPoolManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 143852065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 391ad12f7f22d3845b636f86c2ac3f49, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cbf34ea047f0f946981b56a535e3f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   danmakus:
