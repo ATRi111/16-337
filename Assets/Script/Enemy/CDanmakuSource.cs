@@ -23,7 +23,7 @@ public class CDanmakuSource : MonoBehaviour
 
     private void Shoot_(int damakuIndex, Vector3 offset, int angle)
     {
-        CDanmakuController.Instance.Shoot(damakuIndex, transform.position + offset, m_angle + angle);
+        CDanmakuPoolManager.Instance.Shoot(damakuIndex, transform.position + offset, m_angle + angle);
     }
     //向四面八方发射直线弹幕
     private IEnumerator Attack1()

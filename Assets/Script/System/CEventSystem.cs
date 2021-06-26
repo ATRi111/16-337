@@ -14,7 +14,7 @@ public enum EEventType
 
 public class CEventSystem : CSingleton<CEventSystem>
 {
-    private readonly Dictionary<EEventType, Type> m_EventDict = new Dictionary<EEventType, Type>()
+    private Dictionary<EEventType, Type> m_EventDict = new Dictionary<EEventType, Type>()
     {
         {EEventType.HPChange,typeof(Action<int,int>)},      //血量，血量上限
         {EEventType.PowerChange,typeof(Action<int>)},       //火力
@@ -23,7 +23,7 @@ public class CEventSystem : CSingleton<CEventSystem>
 
         {EEventType.SceneLoad,typeof(Action<int>)},       //要加载的场景号
     };
-    private readonly Dictionary<EEventType, Delegate> m_Event = new Dictionary<EEventType, Delegate>();
+    private Dictionary<EEventType, Delegate> m_Event = new Dictionary<EEventType, Delegate>();
 
     protected override void Awake()
     {

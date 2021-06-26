@@ -43,7 +43,7 @@ public class CTurret : MonoBehaviour
 
         StartCoroutine(ShootCoolDown());
         float shootAngle = Angle + Random.Range(-1f, 1f) * angle_deviation;
-        CDanmakuController.Instance.Shoot(1, transform.position + m_offset * (Vector3)CTool.Angle2Direction(shootAngle), shootAngle);
+        CDanmakuPoolManager.Instance.Shoot(1, transform.position + m_offset * (Vector3)CTool.Angle2Direction(shootAngle), shootAngle);
     }
     protected IEnumerator ShootCoolDown()
     {
