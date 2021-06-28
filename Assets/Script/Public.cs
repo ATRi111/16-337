@@ -7,15 +7,14 @@ namespace Public
     {
         public static Quaternion s_zeroQuaternion = new Quaternion();
         public static Vector3 s_zeroVector = Vector3.zero;
-        public static GameObject FindFromUI(string name) => GameObject.Find("UI").transform.Find(name).gameObject;
         public static IEnumerator Wait(float duration)
         {
             yield return new WaitForSeconds(duration);
         }
         public static Vector2 RandomVector2()
-            => new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+            => new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         public static Vector3 RandomVector3()
-            => new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0);
+            => new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
 
         //代码中人为定义的表示物体朝向和发射方向的角度都遵循以下规则：朝上为0°，顺时针为角度增大的方向，不超过360°
         public static Vector2 Angle2Direction(float angle)
@@ -48,7 +47,6 @@ namespace Public
                 else
                     newAngle = Mathf.Min(maxAngle, 360f - deltaAngle);
             }
-
             newAngle += originAngle;
             newAngle = (newAngle + 360f) % 360f;
             return newAngle;

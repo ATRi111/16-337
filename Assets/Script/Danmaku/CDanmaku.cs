@@ -5,8 +5,8 @@ public class CDanmaku : MonoBehaviour
 {
     internal int m_ID = 0;
     [SerializeField] 
-    protected int m_damage = 10;
-    protected int m_speed = 10;
+    private int m_damage = 10;
+    private int m_speed = 10;
 
     protected Rigidbody2D m_rigidbody;
 
@@ -55,7 +55,7 @@ public class CDanmaku : MonoBehaviour
             obj.GetDamage(m_damage);
             Recycle();
         }
-        else if(collision.CompareTag("Obstacle")||!collision.isTrigger)
+        else if(collision.CompareTag("Obstacle"))
         {
             Recycle();
         }
