@@ -18,10 +18,10 @@ public class CEventSystem : CSingleton<CEventSystem>
     {
         {EEventType.HPChange,typeof(Action<int,int>)},      //血量，血量上限
         {EEventType.PowerChange,typeof(Action<int>)},       //火力
-        {EEventType.SpeedChange,typeof(Action<int>)},       //速度
+        {EEventType.SpeedChange,typeof(Action<int>)},       //最大速度
         {EEventType.Shoot,typeof(Action)},
 
-        {EEventType.SceneLoad,typeof(Action<int>)},       //要加载的场景号
+        {EEventType.SceneLoad,typeof(Action<int>)},         //要加载的场景号
     };
     private Dictionary<EEventType, Delegate> m_Event = new Dictionary<EEventType, Delegate>();
 

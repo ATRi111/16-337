@@ -11,11 +11,8 @@ public class CSceneManager : CSingleton<CSceneManager>
 
     internal int Index
     {
-        get
-        {
-            return _Index;
-        }
-        set
+        get =>_Index;
+        private set
         {
             if (value > MAXINDEX || value < 0)
                 value = 0;
@@ -26,6 +23,11 @@ public class CSceneManager : CSingleton<CSceneManager>
             _Index = value;
             CEventSystem.Instance.ActivateEvent(EEventType.SceneLoad, value);
         }
+    }
+
+    private void Start()
+    {
+        _Index = 0;
     }
 
     //禁止用不属于本类的方法加载场景
@@ -60,4 +62,3 @@ public class CSceneManager : CSingleton<CSceneManager>
         Application.Quit();
     }
 }
-

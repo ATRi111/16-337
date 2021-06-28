@@ -37,6 +37,7 @@ public class CPlayer : CTank
     private void Start()
     {
         Initialize();
+        
     }
     public void Initialize()
     {
