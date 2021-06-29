@@ -11,7 +11,7 @@ public class CPlayer : CTank
         {
             if (value == _HP) return;
             _HP = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.HPChange, value , maxHP);
+            CEventSystem.Instance.ActivateEvent(EEvent.HPChange, value , maxHP);
         }
     }
 

@@ -21,7 +21,7 @@ public class CSceneManager : CSingleton<CSceneManager>
 
             StartCoroutine(ILoadLevel(value));
             _Index = value;
-            CEventSystem.Instance.ActivateEvent(EEventType.SceneLoad, value);
+            CEventSystem.Instance.ActivateEvent(EEvent.SceneLoad, value);
         }
     }
 
